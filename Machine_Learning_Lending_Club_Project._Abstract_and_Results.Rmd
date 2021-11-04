@@ -1,0 +1,105 @@
+---
+title: "Machine Learning - Lending Club Project"
+author: "Rigoberto Leyva Salmeron"
+date: ""
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Abstract
+
+The purpose of this research project is to identify the best
+classification algorithm predict the default on loans. The original
+dataset was collected from lendingclub.com from 2012-2015 contained a total of 156
+features (columns) and 423,810 observations (rows). The result of of
+this research project shows that C5.0 algorithm is the best algorithm to
+predict default on loans with a high degree of accuracy.
+
+# Introduction
+
+In order identify the best classification algorithm from a a group of
+algorithms, the accuracy of all the algorithms should be tested and
+compared on the same test data. The goal of this project was to find the
+best Machine Learning Algorithm to predict the default on loans based on
+data from lendingclub.com. After cleaning columns with few observations
+and running the Boruta algorithm to find important variables, the data
+set was reduced to 49 columns and 392,037 rows. The KNN algorithm was
+unsuccessful to run on the reduced dataset; however, C5.0, Random Forest
+and XGBoost algorithms were successful and they provided a high degree
+of prediction accuracy. However the best performing algorithm was C5.0
+as it produced the highest accuracy.
+
+I summarize the results of the C5.0, Random Forest and XGBoost
+algorithms in the following table:
+
+|          | C5.0  | Random Forest | XGBoost |
+|----------|-------|---------------|---------|
+| Accuracy | 0.998 | 0.996         | 0.985   |
+| Kappa    | 0.994 | 0.986         | 0.944   |
+
+\newpage
+
+## Comparison of confusion matrices obtained from 3 algorithms
+
+**C5.0 Confusion matrix:**
+
+|                 | Truth: Yes | Truth: No |
+|-----------------|------------|-----------|
+| Prediction: Yes | 16133      | 20        |
+| Prediction: No  | 152        | 81704     |
+|                 |            |           |
+
+**Random Forest Confusion matrix:**
+
+|                 | Truth: Yes | Truth: No |
+|-----------------|------------|-----------|
+| Prediction: Yes | 15946      | 26        |
+| Prediction: No  | 339        | 81698     |
+|                 |            |           |
+
+**XGBoost:**
+
+|                 | Truth: Yes | Truth: No |
+|-----------------|------------|-----------|
+| Prediction: Yes | 14846      | 37        |
+| Prediction: No  | 1439       | 81687     |
+|                 |            |           |
+
+## Variables dropped and final model
+
+I dropped columns with more than 50% missing values.
+
+The model identified by the Boruta algorithm was:
+
+default \~ id + loan_amnt + funded_amnt + funded_amnt_inv + term +
+int_rate + installment + grade + sub_grade + annual_inc +
+verification_status + loan_status + url + dti + fico_range_low +
+fico_range_high + open_acc + revol_bal + revol_util + total_acc +
+initial_list_status + out_prncp + out_prncp_inv + total_pymnt +
+total_pymnt_inv + total_rec_prncp + total_rec_int + total_rec_late_fee +
+recoveries + collection_recovery_fee + last_pymnt_d + last_pymnt_amnt +
+last_credit_pull_d + last_fico_range_high + last_fico_range_low +
+tot_cur_bal + total_rev_hi_lim + avg_cur_bal + bc_open_to_buy +
+num_actv_bc_tl + num_actv_rev_tl + num_bc_sats + num_bc_tl +
+num_op_rev_tl + num_rev_accts + num_rev_tl_bal_gt_0 + num_sats +
+tot_hi_cred_lim + total_bal_ex_mort + total_bc_limit +
+debt_settlement_flag + year
+
+Note: I dropped the **loan_status** even though it was identified as
+important in the Boruta algorithm : variable was used for creating
+causing problems at the end when calculating metrics. And also I dropped
+**debt_settlement_flag** because its was an id of people who had
+defaulted and settled debt (ids should never be included in a Machine
+learning algorithmto train).
+
+# Conclusion
+
+In conclusion, this was a challenging and exciting project. I was able
+to run the C5.0, XGBoost and Random Forest algorithms on the whole
+training and test data sets. This was a valuable experience. And my
+results show I have a very good model for predicting default on loans
+for the lendingclub.com data.
