@@ -13,7 +13,7 @@ missing.5 <- map_df(lending_club_data_2012_2014, function(x) mean(is.na(x)) > 0.
 
 vars <-c(names(missing.5)) #variable names to be dropped inside a vector
 
-lending2 <- lending_club_data_2012_2014 | select(-all_of(vars)) #Drop all the variable names identified
+lending2 <- lending_club_data_2012_2014 |> select(-all_of(vars)) #Drop all the variable names identified
 
 #  select model variables 
 
